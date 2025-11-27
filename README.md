@@ -1,101 +1,82 @@
-📘 Attendify – Smart Attendance Tracking Portal
+🌌 Attendify – Smart Attendance Portal
+Your all-in-one attendance tracking, forecasting, analytics & student productivity hub.
+<p align="center"> <img src="https://img.shields.io/badge/React-18.0-61DAFB?style=for-the-badge&logo=react&logoColor=white" /> <img src="https://img.shields.io/badge/Vite-Build%20Tool-646CFF?style=for-the-badge&logo=vite&logoColor=white" /> <img src="https://img.shields.io/badge/Firebase-Backend-DD2C00?style=for-the-badge&logo=firebase&logoColor=white" /> <img src="https://img.shields.io/badge/TypeScript-Strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white" /> <img src="https://img.shields.io/badge/TailwindCSS-Design-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white" /> </p>
+<p align="center"> <img src="/screenshots/attendify-banner.png" width="100%" alt="Attendify Banner"/> </p>
+🚀 What is Attendify?
 
-Attendify is a modern, student-friendly attendance management portal built with React + TypeScript, Firebase Authentication, and Firestore.
-It helps students track attendance, forecast shortages, calculate bunks, and manage daily lecture records with ease.
+Attendify is a next-gen, elegant Attendance Management Portal for students who want more control and insights over their academics.
+Built with React + TypeScript, powered by Firebase Authentication & Firestore, and enhanced with Neon Tailwind UI.
 
-🚀 Features
-🎫 Authentication
+🎬 Live Demo
+<p align="center"> <img src="/screenshots/demo.gif" width="700" alt="Attendify Demo"/> </p>
 
-Login with Email & Password
+Replace with your GIF demo for maximum impact.
 
-Register new user accounts
+✨ Why Attendify? (Key Features)
+🔐 Authentication
 
-User profile stored in Firestore
+Login with Email + Password
 
-Session persistence
+Firebase-secured user sessions
 
-🗓 Calendar & Attendance
+Dedicated Registration Page
 
-Mark attendance: Present / Absent / Cancelled / None
+Auto-loaded User Profiles
+
+📅 Attendance Management
 
 Daily lecture tracking
 
-Notes per lecture
+Present / Absent / Cancelled / None
 
-Slide-over day panel
+Add lecture notes
 
-Full calendar with color-coded status
+Slide-over Day Panel
 
-📊 Dashboard
+Calendar view with heat levels
 
-Today’s attendance summary
+📊 Analytics & Stats
 
-Attendance statistics
+Auto-calculated percentage
 
-Percentage overview
+Present/Absent totals
 
-Present/Absent counts
+Attendance streak
 
-Streak (consecutive present days)
+Historical graph (optional extension)
 
-📈 Stats Page
+🔮 Forecasting
 
-Full analytics
+Predict future attendance
 
-Attendance trends
+See whether you’ll drop below 75%
 
-Overall performance
+Smart advice on managing attendance
 
 🧮 Bunk Calculator
 
-Calculate allowed bunks
+Current percentage
 
-How many classes needed to reach 75%
+Safe bunks remaining
 
-Smart prediction
+Required classes to reach 75%
 
-📅 Forecast
-
-Predict upcoming attendance scenarios
-
-Helps plan bunks ahead
-
-🎨 Modern UI
-
-Tailwind-based glassmorphism UI
-
-Neon gradients & animations
-
-Fully responsive
-
-Clean + smooth UX
-
-🛠 Tech Stack
-Frontend
-
-React
-
-TypeScript
-
-Vite
+🎨 Neon Glassmorphism UI
 
 TailwindCSS
 
-date-fns
+Neon gradients
 
-Backend
+Blur effects
 
-Firebase Authentication
+Smooth animations
 
-Firebase Firestore
+Fully responsive
 
-Firebase Storage (optional for profile photos)
-
-Deployment
-
-Vercel (Multi-page support)
-
-📁 Project Structure
+🧱 Tech Stack Overview
+<p align="center"> <img src="https://skillicons.dev/icons?i=react,ts,firebase,vite,tailwind" height="50"/> </p>
+📁 Directory Structure
+<details> <summary><strong>Click to expand</strong></summary>
 attendify/
 ├── components/
 │   ├── Login.tsx
@@ -106,7 +87,8 @@ attendify/
 │   ├── Stats.tsx
 │   ├── Forecast.tsx
 │   ├── BunkCalculator.tsx
-│   └── Layout.tsx
+│   ├── Layout.tsx
+│   └── Sidebar.tsx
 │
 ├── services/
 │   ├── firebase.ts
@@ -120,24 +102,35 @@ attendify/
 │   └── register.tsx
 │
 ├── vite.config.ts
-└── tsconfig.json
+├── tsconfig.json
+└── README.md
 
-🔧 Setup Instructions
-1️⃣ Clone the repository
-git clone https://github.com/your-username/attendify.git
+</details>
+⚙️ Installation & Setup
+1️⃣ Clone Repository
+git clone https://github.com/yourusername/attendify.git
 cd attendify
 
-2️⃣ Install dependencies
+2️⃣ Install Dependencies
 npm install
 
+3️⃣ Start Development Server
+npm run dev
+
+
+Local Preview →
+
+http://localhost:3000
+
 🔥 Firebase Configuration
-1. Go to Firebase Console
+<details> <summary><strong>Click to expand Firebase Setup</strong></summary>
+1. Create Firebase Project
 
-https://console.firebase.google.com/
+https://console.firebase.google.com
 
-2. Create a Web App
+2. Create Web App
 
-Copy the Firebase SDK config:
+Copy your firebaseConfig:
 
 apiKey: "",
 authDomain: "",
@@ -150,18 +143,18 @@ appId: ""
 
 Create .env.local:
 
-VITE_FIREBASE_API_KEY=xxxxx
-VITE_FIREBASE_AUTH_DOMAIN=xxxxx
-VITE_FIREBASE_PROJECT_ID=xxxxx
-VITE_FIREBASE_STORAGE_BUCKET=xxxxx
-VITE_FIREBASE_MESSAGING_SENDER_ID=xxxxx
-VITE_FIREBASE_APP_ID=xxxxx
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
 
-4. Firebase Auth
+4. Enable Firebase Auth
 
-Enable Email/Password login.
+Activate Email/Password.
 
-5. Firestore Rules
+5. Set Firestore Rules
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -174,22 +167,23 @@ service cloud.firestore {
       }
     }
 
-    match /holidays/{holidayId} {
+    match /holidays/{id} {
       allow read: if true;
       allow write: if request.auth != null;
     }
   }
 }
 
-🧩 Multi-Page Vite Configuration
+</details>
+🌐 Multi-Page Vite (for /register)
 
-Your vite.config.ts must include:
+Make sure vite.config.ts includes:
 
 build: {
   rollupOptions: {
     input: {
-      main: path.resolve(__dirname, 'index.html'),
-      register: path.resolve(__dirname, 'register.html')
+      main: path.resolve(__dirname, "index.html"),
+      register: path.resolve(__dirname, "register.html"),
     }
   }
 }
@@ -197,30 +191,45 @@ build: {
 
 This ensures /register works on Vercel.
 
-▶️ Run Development Server
-npm run dev
-
-
-App runs at:
-
-http://localhost:3000
-
-📦 Build for Production
+🚀 Build for Production
 npm run build
 
-☁️ Deploy to Vercel
+
+Generates production build in:
+
+dist/
+
+☁️ Deploying on Vercel
 vercel --prod
 
-📸 Screenshots (Add your images)
-![Login](screenshots/login.png)
-![Dashboard](screenshots/dashboard.png)
-![Calendar](screenshots/calendar.png)
+🔑 Make sure to add Firebase ENV variables in:
 
-🧑‍💻 Contributing
+Vercel → Project Settings → Environment Variables
 
-Pull requests are welcome.
-For major changes, please open an issue first to discuss the changes.
+🖼 Screenshots
+
+Add your real screenshots for a premium README.
+
+<p align="center"> <img src="/screenshots/login.png" width="300" /> <img src="/screenshots/dashboard.png" width="300" /> <img src="/screenshots/calendar.png" width="300" /> </p>
+🛣️ Future Improvements
+
+Google Sign-In
+
+Attendance prediction using ML
+
+Dark/Light Auto Mode
+
+Export attendance to CSV
+
+Push notifications
+
+Admin panel for teachers
+
+🤝 Contributing
+
+Pull requests are always welcome.
+Please open an issue to discuss major changes.
 
 📄 License
 
-MIT License © 2025
+MIT © 2025
