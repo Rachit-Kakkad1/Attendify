@@ -1,0 +1,123 @@
+import React, { useState } from "react";
+import { auth } from "../services/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { saveUserProfile } from "../services/storage";
+
+export const Register = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      // Create account
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const uid = result.user.uid;
+
+      // Default user profile
+      await saveUserProfile(uid, {
+        uid,
+        name,
+        email,
+        department: "Unknown",
+        semester: "",
+        rollNumber: "",
+      });
+
+    } catch (err: any) {
+      setError(err.message);
+    }
+
+    setLoading(false);
+  };
+
+  return (
+    <div className="min-h-screen w-full flex items-center justify-center bg-slate-900 relative overflow-hidden font-sans">
+      <div className="w-full max-w-md z-10 p-8 glass-card rounded-3xl border border-white/20 shadow-2xl">
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent mb-2">
+            Create Account
+          </h1>
+          <p className="text-slate-400 text-sm tracking-wide uppercase">
+            Join Attendify Today
+          </p>
+        </div>
+
+        <form onSubmit={handleRegister} className="space-y-6">
+
+          <div className="space-y-2">
+            <label className="text-sm text-slate-300 ml-1">Full Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-5 py-4 rounded-xl glass-input placeholder:text-slate-600"
+              placeholder="Your Name"
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm text-slate-300 ml-1">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-5 py-4 rounded-xl glass-input placeholder:text-slate-600"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm text-slate-300 ml-1">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-5 py-4 rounded-xl glass-input placeholder:text-slate-600"
+              placeholder="Create a password"
+              required
+            />
+          </div>
+
+          {error && (
+            <p className="text-red-400 text-sm text-center">{error}</p>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-4 bg-gradient-to-r from-neonPurple to-neonBlue rounded-xl text-white font-bold text-lg flex items-center justify-center"
+          >
+            {loading ? (
+              <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              "Register Account"
+            )}
+          </button>
+        </form>
+
+        <div className="mt-8 text-center">
+          <p className="text-slate-500 text-sm">
+            Already have an account?{" "}
+            <a href="/" className="text-neonBlue cursor-pointer hover:underline">
+              Login Here
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
